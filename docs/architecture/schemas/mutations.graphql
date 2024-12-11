@@ -1,0 +1,39 @@
+# Mutation Schema
+
+type Mutation {
+  # Calendar changes
+  submitCalendarChange(input: CalendarChangeInput!): Calendar!
+  submitBulkCalendarChanges(input: BulkCalendarChangeInput!): [Calendar!]!
+  
+  # Approval operations
+  approveCalendarChange(input: ApprovalInput!): Calendar!
+  approveBulkCalendarChanges(input: BulkApprovalInput!): [Calendar!]!
+  
+  # Branch operations
+  createBranch(
+    code: ID!
+    name: String!
+    ifsc: String
+    address: String
+  ): Branch!
+  
+  updateBranch(
+    code: ID!
+    name: String
+    ifsc: String
+    address: String
+    isActive: Boolean
+  ): Branch!
+  
+  # Status operations
+  createDateStatus(
+    code: ID!
+    name: String!
+  ): DateStatus!
+  
+  updateDateStatus(
+    code: ID!
+    name: String
+    isActive: Boolean
+  ): DateStatus!
+}

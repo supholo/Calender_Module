@@ -1,0 +1,48 @@
+# Error Handling Schema
+
+enum ErrorCode {
+  # Validation errors
+  INVALID_DATE_RANGE
+  DATE_RANGE_TOO_LARGE
+  INVALID_WORKING_HOURS
+  INVALID_STATUS_TRANSITION
+  
+  # Authorization errors
+  UNAUTHORIZED_BRANCH_ACCESS
+  UNAUTHORIZED_STATUS_CHANGE
+  
+  # Not found errors
+  BRANCH_NOT_FOUND
+  STATUS_NOT_FOUND
+  CALENDAR_NOT_FOUND
+  
+  # Business logic errors
+  PAST_DATE_MODIFICATION
+  DUPLICATE_CALENDAR_ENTRY
+  VERSION_CONFLICT
+  PENDING_APPROVAL_EXISTS
+}
+
+type Error {
+  code: ErrorCode!
+  message: String!
+  path: [String!]
+  details: String
+}
+
+interface MutationResponse {
+  success: Boolean!
+  errors: [Error!]
+}
+
+type CalendarMutationResponse implements MutationResponse {
+  success: Boolean!
+  errors: [Error!]
+  calendar: Calendar
+}
+
+type BulkCalendarMutationResponse implements MutationResponse {
+  success: Boolean!
+  errors: [Error!]
+  calendars: [Calendar!]
+}

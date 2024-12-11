@@ -1,0 +1,33 @@
+# Query Schema
+
+type Query {
+  # Calendar queries
+  calendar(date: Date!, branchCode: ID!): Calendar
+  calendars(filter: CalendarFilterInput!): [Calendar!]!
+  
+  # Working hours query
+  getWorkingHours(input: DateRangeInput!): WorkingHoursSummary!
+  
+  # Branch queries
+  branch(code: ID!): Branch
+  branches(isActive: Boolean): [Branch!]!
+  
+  # Status queries
+  dateStatus(code: ID!): DateStatus
+  dateStatuses(isActive: Boolean): [DateStatus!]!
+  
+  # Approval history queries
+  approvalHistory(
+    branchCode: ID!
+    startDate: Date!
+    endDate: Date!
+  ): [ApprovalHistory!]!
+
+  # Pending approval queries
+  pendingApprovals(filter: PendingApprovalFilterInput): [PendingApproval!]!
+  pendingApprovalSummary: PendingApprovalSummary!
+  
+  # Pending count by branch
+  pendingApprovalsByBranch(branchCode: ID!): [PendingApproval!]!
+  pendingApprovalsCount(branchCode: ID): Int!
+}

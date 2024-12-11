@@ -1,0 +1,121 @@
+# Base Types Schema
+
+scalar Date
+scalar DateTime
+scalar Decimal
+
+type Branch {
+  code: ID!
+  name: String!
+  isActive: Boolean!
+  ifsc: String
+  address: String
+  createdAt: DateTime!
+  createdBy: String!
+  updatedAt: DateTime
+  updatedBy: String
+}
+
+type DateStatus {
+  code: ID!
+  name: String!
+  isActive: Boolean!
+  createdAt: DateTime!
+  createdBy: String!
+  updatedAt: DateTime
+  updatedBy: String
+}
+
+type WorkingHours {
+  id: ID!
+  hours: Decimal!
+  uom: String!
+  isActive: Boolean!
+  createdAt: DateTime!
+  createdBy: String!
+  updatedAt: DateTime
+  updatedBy: String
+}
+
+type Calendar {
+  date: Date!
+  branch: Branch!
+  status: DateStatus!
+  isWorkingDay: Boolean!
+  description: String
+  isPending: Boolean!
+  isApproved: Boolean!
+  isRejected: Boolean!
+  rejectReason: String
+  makerComment: String
+  checkerComment: String
+  workingHours: WorkingHours
+  version: Int!
+  createdAt: DateTime!
+  createdBy: String!
+  updatedAt: DateTime
+  updatedBy: String
+}
+
+type DailyWorkingHours {
+  date: Date!
+  hours: Decimal!
+  uom: String!
+  status: DateStatus!
+  isWorkingDay: Boolean!
+}
+
+type WorkingHoursSummary {
+  totalHours: Decimal!
+  uom: String!
+  details: [DailyWorkingHours!]!
+}
+
+type ApprovalHistory {
+  id: ID!
+  date: Date!
+  branch: Branch!
+  action: ApprovalAction!
+  oldStatus: DateStatus!
+  newStatus: DateStatus!
+  oldWorkingHours: Decimal
+  newWorkingHours: Decimal
+  makerComment: String
+  checkerComment: String
+  rejectReason: String
+  actionDate: DateTime!
+  actionBy: String!
+}
+
+type PendingApprovalSummary {
+  totalCount: Int!
+  byBranch: [BranchPendingCount!]!
+  byStatus: [StatusPendingCount!]!
+}
+
+type BranchPendingCount {
+  branch: Branch!
+  count: Int!
+}
+
+type StatusPendingCount {
+  status: DateStatus!
+  count: Int!
+}
+
+type PendingApproval {
+  calendar: Calendar!
+  oldStatus: DateStatus!
+  newStatus: DateStatus!
+  oldWorkingHours: WorkingHours
+  newWorkingHours: WorkingHours!
+  makerComment: String!
+  submittedAt: DateTime!
+  submittedBy: String!
+}
+
+enum ApprovalAction {
+  PENDING
+  APPROVED
+  REJECTED
+}

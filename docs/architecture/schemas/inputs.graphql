@@ -1,0 +1,55 @@
+# Input Types Schema
+
+input DateRangeInput {
+  startDate: Date!
+  endDate: Date!
+  branchCode: ID!
+}
+
+input WorkingHoursInput {
+  hours: Decimal!
+  uom: String!
+}
+
+input CalendarChangeInput {
+  date: Date!
+  branchCode: ID!
+  statusCode: ID!
+  description: String
+  makerComment: String!
+  workingHours: WorkingHoursInput!
+}
+
+input BulkCalendarChangeInput {
+  changes: [CalendarChangeInput!]!
+}
+
+input ApprovalInput {
+  date: Date!
+  branchCode: ID!
+  action: ApprovalAction!
+  checkerComment: String
+  rejectReason: String
+}
+
+input BulkApprovalInput {
+  approvals: [ApprovalInput!]!
+}
+
+input CalendarFilterInput {
+  branchCode: ID
+  startDate: Date
+  endDate: Date
+  statusCode: ID
+  isPending: Boolean
+  isApproved: Boolean
+  isRejected: Boolean
+}
+
+input PendingApprovalFilterInput {
+  branchCodes: [ID!]
+  startDate: Date
+  endDate: Date
+  statusCodes: [ID!]
+  submittedBy: String
+}

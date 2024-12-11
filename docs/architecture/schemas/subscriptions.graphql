@@ -1,0 +1,12 @@
+# Subscription Schema
+
+type Subscription {
+  # Real-time calendar updates
+  onCalendarChanged(branchCode: ID!): Calendar!
+  
+  # Real-time approval notifications
+  onApprovalStatusChanged(branchCode: ID!): ApprovalHistory!
+  
+  # Real-time working hours updates
+  onWorkingHoursChanged(branchCode: ID!): WorkingHours!
+}
